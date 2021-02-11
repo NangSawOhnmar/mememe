@@ -8,7 +8,7 @@
 import UIKit
 
 
-class ViewController: UIViewController {
+class MemeViewController: UIViewController {
     
     @IBOutlet weak var navigationBar: UINavigationBar!
     @IBOutlet weak var toolBar: UIToolbar!
@@ -23,10 +23,11 @@ class ViewController: UIViewController {
     let memeTextAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.strokeColor: UIColor.black,
         NSAttributedString.Key.foregroundColor: UIColor.white,
-        NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        NSAttributedString.Key.strokeWidth: -2.0
+        NSAttributedString.Key.font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 50)!,
+        NSAttributedString.Key.strokeWidth: -5.0
     ]
     var activeTextField = UITextField()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -80,6 +81,7 @@ class ViewController: UIViewController {
     
     //cancel to share photo
     @IBAction func cancelToShare(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
         initialState()
     }
     
@@ -103,12 +105,13 @@ class ViewController: UIViewController {
     func save() {
         // update the meme
         let meme = Meme(topText: topTextField.text!,
-                 bottomText: bottomTextField.text!,
-                 originalImage:imageViewPicker.image!,
-                 memedImage: generateMemedImage())
+                        bottomText: bottomTextField.text!,
+                        originalImage:imageViewPicker.image!,
+                        memedImage: generateMemedImage())
         
         // Add it to the meme array on the AppDelegate
-        (UIApplication.shared.delegate as! AppDelegate).memes.append(meme)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     func generateMemedImage() -> UIImage {
@@ -138,7 +141,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension MemeViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[.originalImage] as? UIImage {
             self.imageViewPicker.image = image
@@ -152,7 +155,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
     }
 }
 
-extension ViewController: UITextFieldDelegate {
+extension MemeViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         //clear textfield when begin editing
         if textField == topTextField && textField.text == "TOP" || textField == bottomTextField && textField.text == "BOTTOM"{

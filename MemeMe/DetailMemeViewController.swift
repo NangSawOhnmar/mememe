@@ -9,21 +9,14 @@ import UIKit
 
 class DetailMemeViewController: UIViewController {
 
+    @IBOutlet weak var memeImageView: UIImageView!
+    
+    // Variable to hold meme image from previous controller
+    var memeImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        memeImageView.image = memeImage
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
